@@ -1,9 +1,11 @@
 const express = require("express");
-const app = express();
+const app = express(); //starting express
 
 app.get("/", (req, res) => {
-  res.send("Hello this is express application");
+  res.send("Hello this is my first express application");
 });
+
+//Running server
 app.listen(5666, () => {
   console.log("server is running on port 5666");
 });
