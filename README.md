@@ -1,13 +1,12 @@
 # express
 
-Express installation process
-=====
+# Express installation process
 
 ### Step 1: npm init -y
 
 ### step 2: npm i --save express
 
-### step 3: npm i --save-dev nodemon
+### step 3: npm i --save-dev nodemon //lets automatic restart of the server
 
 ### step 4: npm run start
 
