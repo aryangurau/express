@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const indexRouter = require("./routing");
 
+app.use(express.json());
 app.use("/", indexRouter);
 const PORT = Number(process.env.PORT) || 6999;
 

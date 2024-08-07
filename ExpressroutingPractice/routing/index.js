@@ -1,21 +1,40 @@
 const router = require("express").Router();
 //user CRUD
-router.get("/", (req, res) => {
-  res.json({ data: "hello i am receiving data from server" });
+// router.get("/", (req, res) => {
+//   res.json({ data: "hello i am receiving data from server" });
+// });
+
+//Dynamic routes
+router.get("/:id", (req, res) => {
+  //request bata data pathaune technique
+  //query(?)
+  //parameter(/:id)
+  //body
+
+  console.log(req?.params);
+  console.log(req?.query);
+  res.json({
+    data: `hello id number${req?.params?.id}  with query data ${JSON.stringify(
+      req.query
+    )}`,
+  });
 });
+
 router.post("/", (req, res) => {
+  console.log(req?.body);
   res.json({ data: "hello i am adding new data" });
 });
-router.put("/", (req, res) => {
-  res.json({ data: "hello i am updating multiple field data" });
-});
 
-router.patch("/", (req, res) => {
-  res.json({ data: "hello hello i am updating single field data" });
-});
+// router.put("/", (req, res) => {
+//   res.json({ data: "hello i am updating multiple field data" });
+// });
 
-router.delete("/", (req, res) => {
-  res.json({ data: "hello i am deleting data from database" });
-});
+// router.patch("/", (req, res) => {
+//   res.json({ data: "hello hello i am updating single field data" });
+// });
+
+// router.delete("/", (req, res) => {
+//   res.json({ data: "hello i am deleting data from database" });
+// });
 
 module.exports = router;
