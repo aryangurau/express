@@ -1,18 +1,22 @@
 const router = require("express").Router();
 //user CRUD
-// router.get("/", (req, res) => {
-//   res.json({ data: "hello i am receiving data from server" });
+router.get("/", (req, res) => {
+  res.json({ data: "hello i am receiving data from server" });
+});
+
+// router.get("/:id", (req, res) => {
+//   res.json({ data: "hello i am receiving data from id" });
 // });
 
 //Dynamic routes
 router.get("/:id", (req, res) => {
-  //request bata data pathaune technique
-  //query(?)
-  //parameter(/:id)
-  //body
+  //request bat data pathaune technique in database
+  //1.query(?)
+  //2.params(/:id)
+  //3.body
 
-  console.log(req?.params);
-  console.log(req?.query);
+  console.log(req?.params); //{id:"1"}
+  console.log(req?.query); // ?name=aryan&age=24 =>{ name: 'aryan', age: '24' }
   res.json({
     data: `hello id number${req?.params?.id}  with query data ${JSON.stringify(
       req.query
