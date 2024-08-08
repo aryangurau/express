@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 
 //Dynamic routes
 router.get("/:id", (req, res) => {
-  //request bat data pathaune technique in database
+  //request bata data pathaune technique in database
   //1.query(?)
   //2.params(/:id)
   //3.body
