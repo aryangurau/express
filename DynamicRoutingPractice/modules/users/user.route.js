@@ -5,11 +5,15 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  res.json({ data: `hello from users get single data ` });
+  //params
+  res.json({ data: `hello from users get single data ${req?.params?.id} ` });
 });
 
 router.post("/:id", (req, res) => {
-  res.json({ data: `hello from users post create new user data ` });
+  console.log(req?.body);
+  res.json({
+    data: `hello from users post create new user data ${req?.body}`,
+  });
 });
 
 router.put("/:id", (req, res) => {
