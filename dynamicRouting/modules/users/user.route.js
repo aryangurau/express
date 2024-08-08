@@ -19,7 +19,7 @@ router.get("/:id", (req, res) => {
 //add data
 router.post("/", (req, res) => {
   //use req body
-  res.json({ data: `hello world from post users` });
+  res.json({ data: `hello world from post users${req?.body}` });
 });
 
 //update multiple field data
