@@ -32,25 +32,6 @@ const verify = (req, res, next) => {
     throw new Error("you are not authorized");
   }
 };
-const verify2 = (req, res, next) => {
-  const role1 = req.headers.role1;
-  if (!role1 === "user") {
-    next();
-  } else {
-    throw new Error("you are not user");
-  }
-};
-
-//read all data
-router.get("/", verify, verify2, (req, res, next) => {
-  //verify,verify1 is the custom middleware that checks authorization
-  //use query
-  try {
-    res.json({ data: `hello from get alldata users${sum}` }); //sum is not defined
-  } catch (err) {
-    next(err);
-  }
-});
 
 //read single data
 router.get("/:id", (req, res, next) => {
