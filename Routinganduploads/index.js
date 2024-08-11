@@ -1,10 +1,19 @@
 require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 
+const PORT = Number(process.env.PORT) || 8888;
 const indexRouter = require("./routes");
 
-const PORT = Number(process.env.PORT) || 8888;
+mongoose
+  .connect("mongodb://localhost:27017/hotel-mgmt")
+  .then(() => {
+    console.log("database is connected");
+  })
+  .catch((err) => {
+    console.log("database error", err);
+  });
 
 app.use(express.json());
 app.use(express.static("public"));

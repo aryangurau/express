@@ -23,15 +23,31 @@ router.post("/register", upload.single("profilephoto"), (req, res, next) => {
   }
 });
 
-router.get("/", (req, res, next) => {
+//RBAC (role based access control)
+const checkRole = (sysRoles = []) => {
+  //system lai chinne role
+  return (req, res, next) => {
+    try {
+      const { roles: userRole = [] } = req.headers; //user role sent by user // destructured the roles from headers
+
+      const isValidRole = sysRoles.some((role) => userRole.includes(role));
+      if (!isValidRole) throw new Error("user not authorized");
+      next();
+    } catch (err) {
+      next(err);
+    }
+  };
+};
+
+router.get("/", checkRole(["admin"]), (req, res, next) => {
   try {
-    res.json({ data: `hello from get user` });
+    res.json({ data: `hello i have 2 number of users` });
   } catch (err) {
     next(err);
   }
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", checkRole(["admin", "user"]), (req, res, next) => {
   try {
     res.json({ data: `hello from get id  user` });
   } catch (err) {
