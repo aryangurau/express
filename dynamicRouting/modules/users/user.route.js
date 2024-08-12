@@ -3,6 +3,22 @@
 const router = require("express").Router();
 const multer = require("multer");
 
+//RBAC (role based access control)
+const checkRole = (sysRoles = []) => {
+  //system lai chinne role
+  return (req, res, next) => {
+    try {
+      const { roles: userRole = [] } = req.headers; //user role sent by user // destructured the roles from headers
+
+      const isValidRole = sysRoles.some((role) => userRole.includes(role));
+      if (!isValidRole) throw new Error("user not authorized");
+      next();
+    } catch (err) {
+      next(err);
+    }
+  };
+};
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/uploads");
@@ -24,21 +40,30 @@ router.post("/register", upload.single("profilepic"), (req, res, next) => {
   }
 });
 
-const verify = (req, res, next) => {
-  const role = req.headers.role;
-  if (role === "admin") {
-    next();
-  } else {
-    throw new Error("you are not authorized");
-  }
-};
+// const verify = (req, res, next) => {
+//   const role = req.headers.role;
+//   if (role === "admin") {
+//     next();
+//   } else {
+//     throw new Error("you are not authorized");
+//   }
+// };
 
-//read single data
-router.get("/:id", (req, res, next) => {
-  console.log(req?.params?.id);
+router.get("/", checkRole(["admin"]), (req, res, next) => {
   try {
     res.json({
-      data: `hello world from get single data users ${req?.params?.id}`,
+      data: `hello world from get all data only admin access ${req?.params?.id}`,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+//read single data
+router.get("/:id", checkRole(["admin", "user"]), (req, res, next) => {
+  try {
+    res.json({
+      data: `hellofrom get id, both admin and user access${req?.params?.id}`,
     });
   } catch (err) {
     next(err);
