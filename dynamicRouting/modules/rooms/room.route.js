@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const roomController = require("./room.controller");
 
 //get data of all room
 router.get("/", (req, res) => {
@@ -11,8 +12,13 @@ router.get("/:id", (req, res) => {
 });
 
 //add new room
-router.post("/:id", (req, res) => {
-  res.json({ data: `hello from post room` });
+router.post("/:id", async (req, res, next) => {
+  try {
+    const result = await roomController.createRoom(req?.body);
+    res.json({ data: result, msg: "room created successfully" });
+  } catch (err) {
+    next(err);
+  }
 });
 
 //update multiple data  of the room
