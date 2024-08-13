@@ -2,6 +2,7 @@
 
 const router = require("express").Router();
 const multer = require("multer");
+const userController = require("./user.controller");
 
 //RBAC (role based access control)
 const checkRole = (sysRoles = []) => {
@@ -70,12 +71,13 @@ router.get("/:id", checkRole(["admin", "user"]), (req, res, next) => {
   }
 });
 
-//add data
-router.post("/", (req, res, next) => {
+//create
+router.post("/", async (req, res, next) => {
   //use req body
-  console.log(req?.body);
+
   try {
-    res.json({ data: `hello world from post users${req?.body}` });
+    const result = await userController.create(req?.body);
+    res.json({ data: result, msg: "user created successfully" });
   } catch (err) {
     next(err);
   }
