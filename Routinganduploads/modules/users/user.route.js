@@ -23,7 +23,15 @@ router.post("/register", upload.single("profilephoto"), (req, res, next) => {
   }
 });
 
+router.post("/login", (req, res, next) => {
+  try {
+  } catch (err) {
+    next(err);
+  }
+});
+
 //RBAC (role based access control)
+/*
 const checkRole = (sysRoles = []) => {
   //system lai chinne role
   return (req, res, next) => {
@@ -68,5 +76,5 @@ router.put("/:id", (req, res, next) => {
   } catch (err) {
     next(err);
   }
-});
+});*/
 module.exports = router;

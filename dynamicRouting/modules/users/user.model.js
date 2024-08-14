@@ -8,6 +8,7 @@ const userSchema = new Schema(
     email: { type: String, required: true, unique: true },
     roles: { type: [String], enum: ["admin", "user"], default: ["user"] },
     isActive: { type: Boolean, required: true, default: true },
+    image: String,
   },
   { timestamps: true }
 );

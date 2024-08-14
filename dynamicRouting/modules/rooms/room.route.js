@@ -2,38 +2,66 @@ const router = require("express").Router();
 const roomController = require("./room.controller");
 
 //get data of all room
-router.get("/", (req, res) => {
-  res.json({ data: `hello from get room` });
+router.get("/", async (req, res, next) => {
+  try {
+    const result = await roomController.list();
+    res.json({ data: result, msg: "list of all rooms found successfully" });
+  } catch (err) {
+    next(err);
+  }
 });
 
-//get data of single room
-router.get("/:id", (req, res) => {
-  res.json({ data: `hello from get single data of room` });
+//get By room number
+router.get("/:id", async (req, res, next) => {
+  try {
+    const result = await roomController.getById(req?.params?.id);
+
+    res.json({ data: result, msg: "room found successfully" });
+  } catch (err) {
+    next(err);
+  }
 });
 
 //add new room
-router.post("/:id", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    const result = await roomController.createRoom(req?.body);
+    const result = await roomController.create(req.body);
     res.json({ data: result, msg: "room created successfully" });
   } catch (err) {
     next(err);
   }
 });
 
-//update multiple data  of the room
-router.put("/:id", (req, res) => {
-  res.json({ data: `hello from put to updata multiple  room` });
+router.post("/login", () => {});
+
+//update room details
+router.put("/:id", async (req, res, next) => {
+  try {
+    const result = await roomController.updateById(req?.params?.id, req.body);
+    res.json({ data: result, msg: "room updated successfully" });
+  } catch (err) {
+    next(err);
+  }
 });
 
-//update single data of room
-router.patch("/:id", (req, res) => {
-  res.json({ data: `hello from patch update single room` });
+//update status
+router.patch("/:id", async (req, res, next) => {
+  try {
+    const result = await roomController.updateStatus(req?.params?.id);
+    res.json({ data: result, msg: "room status updated successfully" });
+  } catch (err) {
+    next(err);
+  }
 });
 
 //delete the room
-router.delete("/:id", (req, res) => {
-  res.json({ data: `hello from delete room` });
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const result = await roomController.remove(req?.params?.id);
+    res.json({ data: result, msg: "room deleted successfully" });
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;

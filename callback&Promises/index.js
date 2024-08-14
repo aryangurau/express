@@ -1,19 +1,19 @@
-// const goodMorning = () => {
-//   console.log("good morning");
-// };
-// const goodEvening = () => {
-//   console.log("good evening");
-// };
+const goodMorning = () => {
+  console.log("good morning");
+};
+const goodEvening = () => {
+  console.log("good evening");
+};
 
-// const main = ({ first, second }) => {
-//   const currentTime = new Date().getHours();
-//   if (currentTime >= 12) {
-//     first();
-//   } else {
-//     second();
-//   }
-// };
-// main({ first: goodEvening, second: goodMorning });
+const main = ({ first, second }) => {
+  const currentTime = new Date().getHours();
+  if (currentTime >= 12) {
+    first();
+  } else {
+    second();
+  }
+};
+main({ first: goodEvening, second: goodMorning });
 
 //callback for numbers and string together
 // const calculate = (a, b, operation) => {

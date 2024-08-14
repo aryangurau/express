@@ -5,6 +5,7 @@ const multer = require("multer");
 const userController = require("./user.controller");
 
 //RBAC (role based access control)
+/*
 const checkRole = (sysRoles = []) => {
   //system lai chinne role
   return (req, res, next) => {
@@ -19,6 +20,7 @@ const checkRole = (sysRoles = []) => {
     }
   };
 };
+*/
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -31,15 +33,34 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/register", upload.single("profilepic"), (req, res, next) => {
+router.post(
+  "/register",
+  upload.single("profilepic"),
+  async (req, res, next) => {
+    try {
+      const URL = "http://localhost:5600/uploads/";
+      const image = URL + req?.file?.filename;
+      if (req?.file?.filename) {
+        req.body.image = image;
+      }
+      const result = await userController.register(req.body);
+      res.json({ data: result, msg: "User registered successfully" });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.post("/login", async (req, res, next) => {
   try {
-    const URL = "http://localhost:5600/uploads/";
-    const myPicture = URL + req?.file?.filename;
-    res.json({ data: `user registered suscessfully in URL ${myPicture}` });
+    const result = await userController.login(req.body);
+    res.json({ data: result, msg: "user logged in successfully" });
   } catch (err) {
     next(err);
   }
 });
+
+/*
 
 // const verify = (req, res, next) => {
 //   const role = req.headers.role;
@@ -112,4 +133,6 @@ router.delete("/:id", (req, res, next) => {
   }
 });
 
+
+*/
 module.exports = router;
